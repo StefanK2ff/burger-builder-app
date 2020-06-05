@@ -1,9 +1,12 @@
 import React from 'react';
+import Layout from "./components/Layouts/Layout"
 
 function App() {
   return (
     <div >
-      Hello there, general Kenobi.
+    <Layout>
+      <p>Hello there, general Kenobi.</p>
+      </Layout>
     </div>
   );
 }
