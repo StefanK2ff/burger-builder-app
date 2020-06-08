@@ -13,6 +13,7 @@ const controls = [
 export default function buildControls(props) {
     return (
         <div className={classes.BuildControls}>
+        <p>Current Price: <storng> {props.totalPrice.toFixed(2)}$</storng> </p>
             {controls.map(control => {
                 return <BuildControl 
                     key={control.label} 
@@ -22,6 +23,10 @@ export default function buildControls(props) {
                     disabled={props.disabled[control.type]}
                      />
             })}
+            <button 
+                className={classes.OrderButton}
+                disabled={!props.purchaseable}
+                >Order now</button>
         </div>
     )
 }

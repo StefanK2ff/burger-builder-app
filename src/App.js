@@ -6,7 +6,6 @@ function App() {
   return (
     <div>
       <Layout>
-        <p>Hello there, general Kenobi.</p>
         <BurgerBuilder/>
       </Layout>
     </div>
