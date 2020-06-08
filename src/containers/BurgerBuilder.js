@@ -67,7 +67,10 @@ export default class BurgerBuilder extends Component {
     }
     return (
       <Aux>
-        <Modal show={this.state.purchasing}>
+        <Modal
+            show={this.state.purchasing}
+            clicked={this.purchaseHandler}
+            >
             <Summary ingredients={this.state.ingredients}/>
         </Modal>
         <BurgerPreview ingredients={this.state.ingredients} />
