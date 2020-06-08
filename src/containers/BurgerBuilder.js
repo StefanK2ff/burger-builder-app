@@ -58,6 +58,10 @@ export default class BurgerBuilder extends Component {
       this.setState({purchasing: !this.state.purchasing})
   }
 
+  checkOutHandler = () => {
+      alert("You bought a burger!")
+  }
+
   render() {
     const disabledInfo = {
       ...this.state.ingredients,
@@ -71,7 +75,12 @@ export default class BurgerBuilder extends Component {
             show={this.state.purchasing}
             clicked={this.purchaseHandler}
             >
-            <Summary ingredients={this.state.ingredients}/>
+            <Summary 
+                ingredients={this.state.ingredients}
+                cancel={this.purchaseHandler}
+                checkout={this.checkOutHandler}
+                totalPrice={this.state.totalPrice}
+                />
         </Modal>
         <BurgerPreview ingredients={this.state.ingredients} />
         <BuildControls
