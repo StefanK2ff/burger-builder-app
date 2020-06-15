@@ -5,7 +5,7 @@
     width: 11em;
     height: 11em;
     border-radius: 50%;
-    background: #7b7474;
+    background: #ffffff;
     background: -moz-linear-gradient(left, #7b7474 10%, rgba(123,116,116, 0) 42%);
     background: -webkit-linear-gradient(left, #7b7474 10%, rgba(123,116,116, 0) 42%);
     background: -o-linear-gradient(left, #7b7474 10%, rgba(123,116,116, 0) 42%);
@@ -21,7 +21,7 @@
   .Loader:before {
     width: 50%;
     height: 50%;
-    background: #7b7474;
+    background: #ffffff;
     border-radius: 100% 0 0 0;
     position: absolute;
     top: 0;
@@ -29,7 +29,7 @@
     content: '';
   }
   .Loader:after {
-    background: #7b7474;
+    background: #ffffff;
     width: 75%;
     height: 75%;
     border-radius: 50%;
