@@ -23,6 +23,7 @@ class BurgerBuilder extends Component {
     purchaseable: false,
     purchasing: false,
     loading: false,
+    error: false
   };
 
   componentDidMount() {
@@ -33,6 +34,7 @@ class BurgerBuilder extends Component {
       })
       .catch((err) => {
         console.log(err);
+        this.setState({error: true})
       });
   }
 
@@ -109,7 +111,7 @@ class BurgerBuilder extends Component {
     if (this.state.loading) {
       orderSummary = <Spinner />;
     }
-    let burgerArea = <Spinner />;
+    let burgerArea = this.state.error ? <p>Sorry, we're closed.</p> : <Spinner />;
 
     if (this.state.ingredients) {
       burgerArea = (
