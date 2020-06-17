@@ -1,37 +1,53 @@
-import React, { Component } from "react";
+import React, {useEffect, useState} from 'react';
 import Modal from "../components/UI/Modal/Modal";
-import Aux from "./Aux";
-
-const withErrorHandler = (WrappendComponent, axios) => {
-  return class extends Component {
-    state = {
-      error: null,
-    };
-    componentDidMount() {
-      axios.interceptors.request.use((req) => {
-        this.setState({ error: null });
-        return req
-      });
-      axios.interceptors.response.use(res => res, (error) => {
-        this.setState({ error: error });
-      });
-    }
-
-    errorConfirmedHandler = () => {
-      this.setState({ error: null });
-    };
-
-    render() {
-      return (
-        <Aux>
-          <Modal clicked={this.errorConfirmedHandler} show={this.state.error}>
-            {this.state.error ? this.state.error.message : null}
-          </Modal>
-          <WrappendComponent {...this.props} />
-        </Aux>
-      );
-    }
+const withErrorHandler = (WrappedComponent, axios) => {
+  const WithErrorHandler = props => {
+    const [error, setError] = useState(null);
+    const requestInterceptor = axios.interceptors.request.use(
+      req => {
+        setError(null);
+        return req;
+      },
+      errorParameter => {
+        console.log(
+          'Error handler > request > error',
+          errorParameter
+        );
+        setError(errorParameter);
+        return Promise.reject(errorParameter);
+      }
+    );
+    const responseInterceptor = axios.interceptors.response.use(
+      res => res,
+      errorParameter => {
+        console.log(
+          'Error handler > response > error',
+          errorParameter
+        );
+        setError(errorParameter);
+        return Promise.reject('Request failed. Status code 404');
+      }
+    );
+    useEffect(
+      () => {
+        return () => {
+          axios.interceptors.request.eject(requestInterceptor);
+          axios.interceptors.response.eject(responseInterceptor);
+        };
+      },
+      [requestInterceptor, responseInterceptor]
+    );
+    return <>
+      <Modal 
+        show={error !== null}
+        clicked={() => setError(null)}
+      >
+        {error !== null && error}
+      </Modal>
+      <WrappedComponent {...props}/>
+    </>
   };
+  return WithErrorHandler;
 };
-
 export default withErrorHandler;
+
