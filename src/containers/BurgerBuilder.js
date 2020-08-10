@@ -3,7 +3,7 @@ import Aux from "../hoc/Aux";
 import BurgerPreview from "../components/Burger/BurgerPreview";
 import BuildControls from "../components/Burger/BuildControls/BuildControls";
 import Modal from "../components/UI/Modal/Modal";
-import Summary from "./../components/Burger/Summary/Summary";
+import Summary from "../components/Burger/Summary/Summary";
 import axios from "../axios-orders";
 import Spinner from "../components/UI/Spinner/Spinner";
 import withErrorHandler from "../hoc/withErrorHandler";
