@@ -8,16 +8,16 @@ export default function CheckoutSum(props) {
     return (
         <div className={classes.CheckoutSum}>
             <h1>We hope you like your burger!</h1>
-            <div style={{width: '300px', height: '300px', margin: 'auto'}}>
+            <div style={{width: '100%', margin: 'auto'}}>
                 <BurgerPreview ingredients={props.ingredients}/>
             </div>
             <Button 
                 btnType="Danger"
-                clicked
+                click={props.checkoutCancelled}
                 >cancel</Button>
             <Button 
                 btnType="Success"
-                clicked>continue</Button>
+                click={props.checkoutContinued}>continue</Button>
         </div>
     )
 }
