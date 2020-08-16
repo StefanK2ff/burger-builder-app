@@ -94,9 +94,9 @@ class BurgerBuilder extends Component {
     }
     let orderSummary = null;
 
-    // if (this.state.loading) {
-    //   orderSummary = <Spinner />;
-    // }
+    if (this.state.loading) {
+      orderSummary = <Spinner />;
+    }
     let burgerArea = this.state.error ? <p>Sorry, we're closed.</p> : <Spinner />;
 
     if (this.state.ingredients) {

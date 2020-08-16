@@ -17,7 +17,7 @@ export default class Checkout extends Component {
     this.props.history.replace("/checkout/contact-data");
   };
 
-  componentDidlMount() {
+  componentDidMount() {
     const query = new URLSearchParams(this.props.location.search);
     const ingredients = {};
     let price = 0;
