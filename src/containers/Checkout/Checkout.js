@@ -5,8 +5,8 @@ import ContactData from "./ContactData/ContactData";
 
 export default class Checkout extends Component {
   state = {
-    ingredients: null,
-    totalPrice: null
+    ingredients: {},
+    totalPrice: null,
   };
 
   checkoutCancelledHandler = () => {
@@ -17,18 +17,17 @@ export default class Checkout extends Component {
     this.props.history.replace("/checkout/contact-data");
   };
 
-  componentDidMount() {
+  componentDidlMount() {
     const query = new URLSearchParams(this.props.location.search);
     const ingredients = {};
-    let price  = 0;
+    let price = 0;
     for (let param of query.entries()) {
-        //workaround for now
-        if (param[0] === "price") {
-            price = param [1]
-        } else {
-            ingredients[param[0]] = +param[1];
-        }
-      
+      //workaround for now
+      if (param[0] === "price") {
+        price = param[1];
+      } else {
+        ingredients[param[0]] = +param[1];
+      }
     }
     this.setState({ ingredients: ingredients, totalPrice: price });
   }
@@ -43,7 +42,14 @@ export default class Checkout extends Component {
         />
         <Route
           path={this.props.match.path + "/contact-data"}
-          render={() => <ContactData ingredients={this.state.ingredients}  totalPrice={this.state.totalPrice}/>}
+          //way to call a component in "ROUTE" but with additional props
+          render={(props) => (
+            <ContactData
+              ingredients={this.state.ingredients}
+              totalPrice={this.state.totalPrice}
+              {...props} // to pass the history props down
+            />
+          )}
         />
       </div>
     );

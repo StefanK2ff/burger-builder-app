@@ -2,6 +2,7 @@ import React, { Component } from "react";
 import Button from "../../../components/UI/Button/Button";
 import classes from "./ContactData.module.css";
 import axios from "../../../axios-orders";
+import Spinner from "../../../components/UI/Spinner/Spinner";
 
 export default class ContactData extends Component {
   state = {
@@ -11,7 +12,7 @@ export default class ContactData extends Component {
       street: "",
       zipcode: "",
     },
-    loading: false
+    loading: false,
   };
 
   orderHandler = (e) => {
@@ -35,17 +36,18 @@ export default class ContactData extends Component {
       .post("orders.json", order)
       .then((resp) => {
         console.log(resp);
-        this.setState({ loading: false, purchasing: false });
+        this.setState({ loading: false });
+        this.props.history.push("/");
       })
       .catch((error) => {
         console.log(error);
-        this.setState({ loading: false, purchasing: false });
+        this.setState({ loading: false });
       });
   };
 
   render() {
-    return (
-      <div className={classes.ContactData}>
+    let form = (
+      <>
         <h4>Your data</h4>
         <form>
           <input
@@ -76,7 +78,11 @@ export default class ContactData extends Component {
             Order now
           </Button>
         </form>
-      </div>
+      </>
     );
+    if (this.state.loading) {
+      form = <Spinner />;
+    }
+    return <div className={classes.ContactData}>{form}</div>;
   }
 }
