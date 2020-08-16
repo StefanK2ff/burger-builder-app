@@ -5,8 +5,8 @@ import NavigationItem from './NavigationItem/NavigationItem'
 export default function navigationItems() {
     return (
         <ul className={classes.NavigationItems}>
-            <NavigationItem target={"/"} active>Burger Builder</NavigationItem>
-            <NavigationItem target={"/"}>My Account</NavigationItem>
+            <NavigationItem target="/" exact>Burger Builder</NavigationItem>
+            <NavigationItem target="/orders">My Orders</NavigationItem>
         </ul>
     )
 }
