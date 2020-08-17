@@ -11,6 +11,7 @@ export default function Input(props) {
           className={classes.InputElem}
           {...props.elementConfig}
           value={props.value}
+          onChange={props.onChange}
         />
       );
       break;
@@ -20,13 +21,18 @@ export default function Input(props) {
           className={classes.InputElem}
           {...props.elementConfig}
           value={props.value}
+          onChange={props.onChange}
         />
       );
       break;
     //number, email ...
     case "select":
       inputElement = (
-        <select className={classes.InputElem} value={props.value}>
+        <select
+          className={classes.InputElem}
+          value={props.value}
+          onChange={props.onChange}
+        >
           {props.elementConfig.options.map((option) => (
             <option key={option.value} value={option.value}>
               {option.displayValue}
@@ -42,6 +48,7 @@ export default function Input(props) {
           className={classes.InputElem}
           {...props.elementConfig}
           value={props.value}
+          onChange={props.onChange}
         />
       );
   }
