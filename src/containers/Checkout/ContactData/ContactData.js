@@ -3,6 +3,7 @@ import Button from "../../../components/UI/Button/Button";
 import classes from "./ContactData.module.css";
 import axios from "../../../axios-orders";
 import Spinner from "../../../components/UI/Spinner/Spinner";
+import Input from "../../../components/UI/Input/Input";
 
 export default class ContactData extends Component {
   state = {
@@ -47,38 +48,35 @@ export default class ContactData extends Component {
 
   render() {
     let form = (
-      <>
-        <h4>Your data</h4>
-        <form>
-          <input
-            className={classes.Input}
-            type="text"
-            name="name"
-            placeholder="Your name"
-          ></input>
-          <input
-            className={classes.Input}
-            type="email"
-            name="email"
-            placeholder="Your email"
-          ></input>
-          <input
-            className={classes.Input}
-            type="text"
-            name="street"
-            placeholder="Street & housenumber"
-          ></input>
-          <input
-            className={classes.Input}
-            type="text"
-            name="zipcode"
-            placeholder="12345"
-          ></input>
-          <Button btnType="Success" click={this.orderHandler}>
-            Order now
-          </Button>
-        </form>
-      </>
+      <form>
+        <Input
+          inputtype="input"
+          type="text"
+          name="name"
+          placeholder="Your name"
+        />
+        <Input
+          inputtype="input"
+          type="email"
+          name="email"
+          placeholder="Your email"
+        />
+        <Input
+          inputtype="input"
+          type="text"
+          name="street"
+          placeholder="Street & housenumber"
+        />
+        <Input
+          inputtype="input"
+          type="text"
+          name="zipcode"
+          placeholder="12345"
+        />
+        <Button btnType="Success" click={this.orderHandler}>
+          Order now
+        </Button>
+      </form>
     );
     if (this.state.loading) {
       form = <Spinner />;
