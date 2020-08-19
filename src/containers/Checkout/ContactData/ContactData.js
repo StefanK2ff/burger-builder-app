@@ -16,6 +16,10 @@ export default class ContactData extends Component {
           placeholder: "Your Name here",
         },
         value: "",
+        validation: {
+          required: true,
+        },
+        valid: false,
       },
       stree: {
         elementType: "input",
@@ -24,6 +28,10 @@ export default class ContactData extends Component {
           placeholder: "Your Street here",
         },
         value: "",
+        validation: {
+          required: true,
+        },
+        valid: false,
       },
       zipCode: {
         elementType: "input",
@@ -32,6 +40,11 @@ export default class ContactData extends Component {
           placeholder: "Your ZIP code here",
         },
         value: "",
+        validation: {
+          required: true,
+          minLength: 5
+        },
+        valid: false,
       },
       city: {
         elementType: "input",
@@ -40,6 +53,10 @@ export default class ContactData extends Component {
           placeholder: "Your City here",
         },
         value: "",
+        validation: {
+          required: true,
+        },
+        valid: false,
       },
       email: {
         elementType: "input",
@@ -48,6 +65,11 @@ export default class ContactData extends Component {
           placeholder: "Your E-Mail here",
         },
         value: "",
+        validation: {
+          required: true,
+          contains: "@"
+        },
+        valid: false,
       },
       deliveryMethod: {
         elementType: "select",
@@ -57,7 +79,7 @@ export default class ContactData extends Component {
             { value: "cheapest", displayValue: "Cheapest" },
           ],
         },
-        value: "",
+        value: "fastest",
       },
     },
     loading: false,
@@ -68,12 +90,12 @@ export default class ContactData extends Component {
     this.setState({ loading: true });
     const formData = {};
     for (let formElementIdent in this.state.orderForm) {
-        formData[formElementIdent] = this.state.orderForm[formElementIdent].value;
+      formData[formElementIdent] = this.state.orderForm[formElementIdent].value;
     }
     const order = {
       ingredients: this.props.ingredients,
       price: this.props.totalPrice, //normally: recalculate price on server
-      orderData: formData
+      orderData: formData,
     };
     axios
       .post("orders.json", order)
@@ -88,17 +110,38 @@ export default class ContactData extends Component {
       });
   };
 
+  checkValiditiy = (value, rules) => {
+    let isValid = true
+    if (rules.required) {
+        isValid = value.trim() !== "" && isValid
+    }
+    if (rules.minLength) {
+        isValid = value.length >= rules.minLength && isValid
+    }
+    if (rules.maxLength) {
+        isValid = value.length <= rules.maxLength && isValid
+    }
+    if (rules.contains) {
+        isValid = value.indexOf(rules.contains) !== -1 && isValid
+    }
+    return isValid
+  };
+
   inputChangedHandler = (e, inputIdent) => {
-    
     const updatedForm = {
       ...this.state.orderForm, //copies the pointer
     };
-    const updatedFormElement = { 
-        ...updatedForm[inputIdent] 
-    }; 
+    const updatedFormElement = {
+      ...updatedForm[inputIdent],
+    };
     updatedFormElement.value = e.target.value;
+    updatedFormElement.valid = this.checkValiditiy(
+      updatedFormElement.value,
+      updatedFormElement.validation
+    );
     updatedForm[inputIdent] = updatedFormElement;
-    this.setState({orderForm: updatedForm})
+
+    this.setState({ orderForm: updatedForm });
   };
 
   render() {
@@ -124,9 +167,7 @@ export default class ContactData extends Component {
           />
         ))}
 
-        <Button btnType="Success" >
-          Order now
-        </Button>
+        <Button btnType="Success">Order now</Button>
       </form>
     );
     if (this.state.loading) {
