@@ -84,7 +84,9 @@ export default class ContactData extends Component {
             { value: "cheapest", displayValue: "Cheapest" },
           ],
         },
+        validation: {},
         value: "fastest",
+        valid: true,
         touched: false,
       },
     },
@@ -149,7 +151,11 @@ export default class ContactData extends Component {
     updatedFormElement.touched = true;
     updatedForm[inputIdent] = updatedFormElement;
 
-    this.setState({ orderForm: updatedForm });
+    let formIsValid = true;
+    for (let inputIdents in updatedForm) {
+        formIsValid = updatedForm[inputIdents].valid && formIsValid
+    }
+    this.setState({ orderForm: updatedForm, formIsValid: formIsValid});
   };
 
   render() {
@@ -178,7 +184,7 @@ export default class ContactData extends Component {
           />
         ))}
 
-        <Button btnType="Success">Order now</Button>
+        <Button btnType="Success" disabled={!this.state.formIsValid}>Order now</Button>
       </form>
     );
     if (this.state.loading) {
