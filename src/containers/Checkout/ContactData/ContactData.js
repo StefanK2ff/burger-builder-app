@@ -20,6 +20,7 @@ export default class ContactData extends Component {
           required: true,
         },
         valid: false,
+        touched: false,
       },
       stree: {
         elementType: "input",
@@ -32,6 +33,7 @@ export default class ContactData extends Component {
           required: true,
         },
         valid: false,
+        touched: false,
       },
       zipCode: {
         elementType: "input",
@@ -45,6 +47,7 @@ export default class ContactData extends Component {
           minLength: 5
         },
         valid: false,
+        touched: false,
       },
       city: {
         elementType: "input",
@@ -57,6 +60,7 @@ export default class ContactData extends Component {
           required: true,
         },
         valid: false,
+        touched: false,
       },
       email: {
         elementType: "input",
@@ -70,6 +74,7 @@ export default class ContactData extends Component {
           contains: "@"
         },
         valid: false,
+        touched: false,
       },
       deliveryMethod: {
         elementType: "select",
@@ -80,9 +85,11 @@ export default class ContactData extends Component {
           ],
         },
         value: "fastest",
+        touched: false,
       },
     },
     loading: false,
+    formIsValid: false,
   };
 
   orderHandler = (e) => {
@@ -139,6 +146,7 @@ export default class ContactData extends Component {
       updatedFormElement.value,
       updatedFormElement.validation
     );
+    updatedFormElement.touched = true;
     updatedForm[inputIdent] = updatedFormElement;
 
     this.setState({ orderForm: updatedForm });
@@ -161,6 +169,9 @@ export default class ContactData extends Component {
             elementType={formElement.config.elementType}
             elementConfig={formElement.config.elementConfig}
             value={formElement.config.value}
+            invalid={!formElement.config.valid}
+            validate={formElement.config.validation}
+            touched={formElement.config.touched}
             onChange={(event) =>
               this.inputChangedHandler(event, formElement.id)
             }
