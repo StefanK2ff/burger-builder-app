@@ -1,4 +1,4 @@
-This Version contains teh burger builder from Udemy React Course ["React - The Complete Guide (incl Hooks, React Router, Redux)"](https://www.udemy.com/course/react-the-complete-guide-incl-redux/) without using redux.
+This Version contains the burger builder from Udemy React Course ["React - The Complete Guide (incl Hooks, React Router, Redux)"](https://www.udemy.com/course/react-the-complete-guide-incl-redux/) with redux.
 
 
 This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
