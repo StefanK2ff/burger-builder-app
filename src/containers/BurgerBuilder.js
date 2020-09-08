@@ -13,6 +13,7 @@ import * as actionTypes from "./../store/actions";
 
 class BurgerBuilder extends Component {
   state = {
+    //UI states for this component
     purchasing: false,
     loading: false,
     error: false
@@ -46,18 +47,7 @@ class BurgerBuilder extends Component {
   };
 
   checkOutHandler = () => {
-    const params = [];
-    for (let i in this.state.ingredients) {
-        params.push(encodeURIComponent(i)+ '=' + encodeURIComponent(this.state.ingredients[i]));
-    }
-    params.push("price=" + this.props.prc)
-    
-    const queryString = params.join("&");
-
-    this.props.history.push({
-      pathname: "/checkout",
-      search: "?" + queryString
-    });
+    this.props.history.push("/checkout");
   };
 
   render() {
