@@ -5,10 +5,17 @@ const initialState = {
       salad: 0,
       bacon: 0,
       cheese: 0,
-      meat: 2,
+      meat: 0,
   },
   totalPrice: 4,
 };
+
+const INGREDIENT_PRICES = {
+    salad: 0.5,
+    cheese: 1.5,
+    bacon: 2,
+    meat: 3,
+  };
 
 const reducer = (state = initialState, action) => {
     switch (action.type) {
@@ -18,7 +25,8 @@ const reducer = (state = initialState, action) => {
                 ingredients: {
                     ...state.ingredients, // deeper cloning
                     [action.ingredientName]: state.ingredients[action.ingredientName] + 1,
-                }
+                },
+                totalPrice: state.totalPrice + INGREDIENT_PRICES[action.ingredientName]
             };
         case actionTypes.REMOVE_INGREDIENT:
             return {
@@ -26,7 +34,8 @@ const reducer = (state = initialState, action) => {
                 ingredients: {
                     ...state.ingredients, // deeper cloning
                     [action.ingredientName]: state.ingredients[action.ingredientName] - 1,
-                }
+                },
+                totalPrice: state.totalPrice - INGREDIENT_PRICES[action.ingredientName]
             };
         default:
             return state;
