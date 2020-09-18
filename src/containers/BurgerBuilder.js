@@ -4,9 +4,9 @@ import BurgerPreview from "../components/Burger/BurgerPreview";
 import BuildControls from "../components/Burger/BuildControls/BuildControls";
 import Modal from "../components/UI/Modal/Modal";
 import Summary from "../components/Burger/Summary/Summary";
-import axios from "../axios-orders";
 import Spinner from "../components/UI/Spinner/Spinner";
 import withErrorHandler from "../hoc/withErrorHandler";
+import axios from "../axios-orders";
 
 import { connect } from "react-redux";
 import * as burgerBuilderActions from "../store/actions";
@@ -15,20 +15,10 @@ class BurgerBuilder extends Component {
   state = {
     //UI states for this component
     purchasing: false,
-    loading: false,
-    error: false
   };
 
   componentDidMount() {
-    // axios
-    //   .get("ingredients.json")
-    //   .then((resp) => {
-    //     this.setState({ ingredients: resp.data });
-    //   })
-    //   .catch((err) => {
-    //     console.log(err);
-    //     this.setState({error: true})
-    //   });
+ 
   }
 
   updatePurchaseableHandler = (ingredients) => {
@@ -59,9 +49,6 @@ class BurgerBuilder extends Component {
     }
     let orderSummary = null;
 
-    if (this.state.loading) {
-      orderSummary = <Spinner />;
-    }
     let burgerArea = this.state.error ? <p>Sorry, we're closed.</p> : <Spinner />;
 
     if (this.props.ings) {
