@@ -110,6 +110,8 @@ class ContactData extends Component {
       price: this.props.prc, //normally: recalculate price on server
       orderData: formData,
     };
+
+    this.props.onOrderBurger(order);
     
   };
 
@@ -197,8 +199,8 @@ const mapStateToProps = state => {
 
 const mapDispatchToProps = dispatch => {
   return {
-
+    onOrderBurger: (orderData) => dispatch(orderActions.purchaseBurgerStart(orderData)),
   }
 }
 
-export default connect(mapStateToProps)(withErrorHandler(ContactData, axios))
+export default connect(mapStateToProps, mapDispatchToProps)(withErrorHandler(ContactData, axios))
