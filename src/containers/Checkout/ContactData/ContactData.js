@@ -94,7 +94,7 @@ class ContactData extends Component {
         touched: false,
       },
     },
-    loading: false,
+    
     formIsValid: false,
   };
 
@@ -183,7 +183,7 @@ class ContactData extends Component {
         <Button btnType="Success" disabled={!this.state.formIsValid}>Order now</Button>
       </form>
     );
-    if (this.state.loading) {
+    if (this.props.ldng) {
       form = <Spinner />;
     }
     return <div className={classes.ContactData}>{form}</div>;
@@ -193,13 +193,15 @@ class ContactData extends Component {
 const mapStateToProps = state => {
   return {
     ings: state.ingredients,
-    prc: state.totalPrice
+    prc: state.totalPrice,
+    ldng: state.loading,
   }
 }
 
 const mapDispatchToProps = dispatch => {
   return {
-    onOrderBurger: (orderData) => dispatch(orderActions.purchaseBurgerStart(orderData)),
+    onOrderBurger: (orderData) => dispatch(orderActions.purchaseBurger(orderData)),
+    
   }
 }
 
