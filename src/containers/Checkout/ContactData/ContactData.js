@@ -4,8 +4,10 @@ import classes from "./ContactData.module.css";
 import axios from "../../../axios-orders";
 import Spinner from "../../../components/UI/Spinner/Spinner";
 import Input from "../../../components/UI/Input/Input";
+import withErrorHandler from  "../../../hoc/withErrorHandler";
 
 import { connect } from "react-redux";
+import * as orderActions from "../../../store/actions"
 
 class ContactData extends Component {
   state = {
@@ -98,7 +100,7 @@ class ContactData extends Component {
 
   orderHandler = (e) => {
     e.preventDefault();
-    this.setState({ loading: true });
+    
     const formData = {};
     for (let formElementIdent in this.state.orderForm) {
       formData[formElementIdent] = this.state.orderForm[formElementIdent].value;
@@ -193,4 +195,10 @@ const mapStateToProps = state => {
   }
 }
 
-export default connect(mapStateToProps)(ContactData)
+const mapDispatchToProps = dispatch => {
+  return {
+
+  }
+}
+
+export default connect(mapStateToProps)(withErrorHandler(ContactData, axios))
