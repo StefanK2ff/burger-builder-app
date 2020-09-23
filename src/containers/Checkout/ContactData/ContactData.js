@@ -192,16 +192,16 @@ class ContactData extends Component {
 
 const mapStateToProps = state => {
   return {
-    ings: state.ingredients,
-    prc: state.totalPrice,
-    ldng: state.loading,
+    ings: state.burgerBuilder.ingredients,
+    prc: state.burgerBuilder.totalPrice,
+    ldng: state.order.loading,
   }
 }
 
 const mapDispatchToProps = dispatch => {
   return {
     onOrderBurger: (orderData) => dispatch(orderActions.purchaseBurger(orderData)),
-    
+
   }
 }
 
