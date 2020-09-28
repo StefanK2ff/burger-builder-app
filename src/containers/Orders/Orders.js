@@ -1,21 +1,20 @@
 import React, { Component } from "react";
 import Order from "../../components/Order/Order";
 import axios from "../../axios-orders";
-import withErrorHandler from "../../hoc/withErrorHandler"
-//import orderInstance from "../../axios-orders";
+import withErrorHandler from "../../hoc/withErrorHandler";
+import * as actions from "../../store/actions";
+import { connect } from "react-redux";
 
 class Orders extends Component {
-  state = {
-    orders: [],
-    loading: true,
-  };
+
   componentDidMount() {
-    
+    this.props.onFetchOrders();
   }
+
   render() {
     return (
       <div>
-        {this.state.orders.map(order => (
+        {this.props.orders.map(order => (
             <Order 
                 id={order.id}
                 key={order.id}
@@ -28,4 +27,17 @@ class Orders extends Component {
   }
 }
 
-export default withErrorHandler(Orders, axios)
+const mapDispatchToProps = dispatch => {
+  return {
+    onFetchOrders: () => dispatch(actions.ordersFetch())
+  }
+}
+
+const mapStateToProps = state => {
+  return {
+    orders: state.orders.orders,
+    loading: state.orders.loading
+  }
+}
+
+export default connect(mapStateToProps, mapDispatchToProps)(withErrorHandler(Orders, axios));
