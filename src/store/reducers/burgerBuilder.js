@@ -1,4 +1,5 @@
 import * as actionTypes from "../actions/actionTypes";
+import { updateObj } from "./../utility";
 
 const initialState = {
   ingredients: null,
@@ -16,35 +17,27 @@ const INGREDIENT_PRICES = {
 const reducer = (state = initialState, action) => {
     switch (action.type) {
         case actionTypes.ADD_INGREDIENT:
-            return {
-                ...state,
-                ingredients: {
-                    ...state.ingredients, // deeper cloning
-                    [action.ingredientName]: state.ingredients[action.ingredientName] + 1,
-                },
+            const updatedIngredient = {[action.ingredientName]: state.ingredients[action.ingredientName] + 1 }
+            const updatedState = {
+                ingredients: updateObj(state.ingredients, updatedIngredient),
                 totalPrice: state.totalPrice + INGREDIENT_PRICES[action.ingredientName]
-            };
+            }
+            return updateObj(state, updatedState);
         case actionTypes.REMOVE_INGREDIENT:
-            return {
-                ...state,
-                ingredients: {
-                    ...state.ingredients, // deeper cloning
-                    [action.ingredientName]: state.ingredients[action.ingredientName] - 1,
-                },
-                totalPrice: state.totalPrice - INGREDIENT_PRICES[action.ingredientName]
-            };
+            const removedIngredient = {[action.ingredientName]: state.ingredients[action.ingredientName] - 1 }
+            const reducedState = {
+                ingredients: updateObj(state.ingredients, removedIngredient),
+                totalPrice: state.totalPrice + INGREDIENT_PRICES[action.ingredientName]
+            }
+            return updateObj(state, reducedState);
         case actionTypes.SET_INGREDIENTS: 
-            return {
-                ...state,
+            return updateObj (state, {
                 ingredients: action.ingredients,
                 error: false,
                 totalPrice: 4,
-            };
+            });
         case actionTypes.FETCH_INGS_FAILED:
-            return {
-                ...state,
-                error: true
-            }
+            return updateObj(state, {error: true})
         default:
             return state;
     }
