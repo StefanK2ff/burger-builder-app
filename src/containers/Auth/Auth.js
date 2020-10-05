@@ -39,6 +39,41 @@ export default class Auth extends Component {
       },
     },
   };
+
+  checkValiditiy = (value, rules) => {
+    let isValid = true;
+    if (rules.required) {
+      isValid = value.trim() !== "" && isValid;
+    }
+    if (rules.minLength) {
+      isValid = value.length >= rules.minLength && isValid;
+    }
+    if (rules.maxLength) {
+      isValid = value.length <= rules.maxLength && isValid;
+    }
+    if (rules.contains) {
+      isValid = value.indexOf(rules.contains) !== -1 && isValid;
+    }
+    if (rules.isEmail) {
+        isValid = value.indexOf("@") !== -1 && isValid;
+    }
+    return isValid;
+  };
+
+  inputChangedHandler = (e, ident) => {
+    const updatedControls = {
+        ...this.state.controls,
+        [ident]: {
+            ...this.state.controls[ident],
+            value: e.target.value,
+            valid: this.checkValiditiy(e.target.value, this.state.controls[ident].validation),
+            touched: true
+        }
+    };
+    this.setState({controls: updatedControls});
+
+  };
+
   render() {
     const formElementsArray = [];
     for (let key in this.state.controls) {
