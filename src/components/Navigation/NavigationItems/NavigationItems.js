@@ -7,6 +7,7 @@ export default function navigationItems() {
         <ul className={classes.NavigationItems}>
             <NavigationItem target="/" exact>Burger Builder</NavigationItem>
             <NavigationItem target="/orders">My Orders</NavigationItem>
+            <NavigationItem target="/auth">Login/Register</NavigationItem>
         </ul>
     )
 }
