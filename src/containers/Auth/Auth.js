@@ -1,8 +1,9 @@
 import React, { Component } from "react";
 import Input from "../../components/UI/Input/Input";
 import Button from "../../components/UI/Button/Button";
-
 import classes from "./Auth.module.css";
+
+import * as actions from "./../../store/actions/index";
 
 export default class Auth extends Component {
   state = {

@@ -10,3 +10,6 @@ export {
     ordersFetch,
 } from "./order"
 
+export {
+    auth,
+} from "./auth"
