@@ -59,33 +59,39 @@ class Auth extends Component {
       isValid = value.indexOf(rules.contains) !== -1 && isValid;
     }
     if (rules.isEmail) {
-        isValid = value.indexOf("@") !== -1 && isValid;
+      isValid = value.indexOf("@") !== -1 && isValid;
     }
     return isValid;
   };
 
   switchAuthModeHandler = () => {
-      this.setState({isSignUp: !this.state.isSignUp});
-  }
+    this.setState({ isSignUp: !this.state.isSignUp });
+  };
 
   inputChangedHandler = (e, ident) => {
     const updatedControls = {
-        ...this.state.controls,
-        [ident]: {
-            ...this.state.controls[ident],
-            value: e.target.value,
-            valid: this.checkValiditiy(e.target.value, this.state.controls[ident].validation),
-            touched: true
-        }
+      ...this.state.controls,
+      [ident]: {
+        ...this.state.controls[ident],
+        value: e.target.value,
+        valid: this.checkValiditiy(
+          e.target.value,
+          this.state.controls[ident].validation
+        ),
+        touched: true,
+      },
     };
-    this.setState({controls: updatedControls});
-
+    this.setState({ controls: updatedControls });
   };
 
-  submitHandler = e => {
-      e.preventDefault();
-      this.props.onAuth(this.state.controls.email.value, this.state.controls.password.value, this.state.isSignUp);
-  }
+  submitHandler = (e) => {
+    e.preventDefault();
+    this.props.onAuth(
+      this.state.controls.email.value,
+      this.state.controls.password.value,
+      this.state.isSignUp
+    );
+  };
 
   render() {
     const formElementsArray = [];
@@ -109,37 +115,50 @@ class Auth extends Component {
       />
     ));
 
-    const headline = this.state.isSignUp ? "Please sign up" : "Please sign in"
+    const headline = this.state.isSignUp ? "Please sign up" : "Please sign in";
 
-    const caption = this.state.isSignUp ? "Switch to sign in" : "Switch to sign up"
+    const caption = this.state.isSignUp
+      ? "Switch to sign in"
+      : "Switch to sign up";
+
+    let errorMsg = null;
 
     if (this.props.loading) {
-        form = <Spinner />
+      form = <Spinner />;
+    } 
+
+    if (this.props.error) {
+        errorMsg = <p><br />{this.props.error.message}</p>
     }
 
     return (
       <div className={classes.Auth}>
-      {headline}
+        {headline}
+        {errorMsg}
         <form onSubmit={this.submitHandler}>
           {form}
           <Button btnType="Success">Submit</Button>
         </form>
-        <Button btnType="Danger" click={this.switchAuthModeHandler}>{caption}</Button>
+        <Button btnType="Danger" click={this.switchAuthModeHandler}>
+          {caption}
+        </Button>
       </div>
     );
   }
 }
 
-const mapStateToProps = state => {
-    return {
-        loading: state.auth.loading,
-    }
-}
+const mapStateToProps = (state) => {
+  return {
+    loading: state.auth.loading,
+    error: state.auth.error
+  };
+};
 
-const mapDispatchToProps = dispatch => {
-    return {
-        onAuth: (email, pw, isSignup) => dispatch(actions.auth(email, pw, isSignup))
-    }
-}
+const mapDispatchToProps = (dispatch) => {
+  return {
+    onAuth: (email, pw, isSignup) =>
+      dispatch(actions.auth(email, pw, isSignup)),
+  };
+};
 
 export default connect(mapStateToProps, mapDispatchToProps)(Auth);
