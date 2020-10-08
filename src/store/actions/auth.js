@@ -41,7 +41,7 @@ export const auth = (email, password, isSignup) => {
       .post(signupURL + API_KEY, authData)
       .then((resp) => {
         console.log(resp);
-        dispatch(authSuccess(resp.data.token, resp.data.userId));
+        dispatch(authSuccess(resp.data.idToken, resp.data.userId));
       })
       .catch((err) => {
         console.log(err);
