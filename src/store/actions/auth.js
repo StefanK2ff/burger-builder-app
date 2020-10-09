@@ -24,7 +24,7 @@ export const authFail = (error) => {
 
 export const logout = () => {
     return {
-        tpye: actionTypes.AUTH_LOGOUT
+        type: actionTypes.AUTH_LOGOUT
     }
 }
 
@@ -33,7 +33,7 @@ export const checkAuthTimeout = (expirationTime) => {
         setTimeout(()=> {
             console.log("Session expired")
             dispatch(logout())
-        }, expirationTime)
+        }, expirationTime * 1000)
     }
 }
 
@@ -56,7 +56,7 @@ export const auth = (email, password, isSignup) => {
       .post(signupURL + API_KEY, authData)
       .then((resp) => {
         console.log(resp);
-        dispatch(authSuccess(resp.data.idToken, resp.data.userId));
+        dispatch(authSuccess(resp.data.idToken, resp.data.localId));
         dispatch(checkAuthTimeout(resp.data.expiresIn))
       })
       .catch((err) => {
