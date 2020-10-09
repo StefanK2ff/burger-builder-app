@@ -22,6 +22,21 @@ export const authFail = (error) => {
   };
 };
 
+export const logout = () => {
+    return {
+        tpye: actionTypes.AUTH_LOGOUT
+    }
+}
+
+export const checkAuthTimeout = (expirationTime) => {
+    return dispatch => {
+        setTimeout(()=> {
+            console.log("Session expired")
+            dispatch(logout())
+        }, expirationTime)
+    }
+}
+
 export const auth = (email, password, isSignup) => {
   return (dispatch) => {
     const API_KEY = "AIzaSyB3O7oV3Rg6a8cpmc0AElVZITZ8-fnmk8g";
@@ -42,6 +57,7 @@ export const auth = (email, password, isSignup) => {
       .then((resp) => {
         console.log(resp);
         dispatch(authSuccess(resp.data.idToken, resp.data.userId));
+        dispatch(checkAuthTimeout(resp.data.expiresIn))
       })
       .catch((err) => {
         console.log(err);
