@@ -7,9 +7,9 @@ export default function navigationItems(props) {
         <ul className={classes.NavigationItems}>
             <NavigationItem target="/" exact>Burger Builder</NavigationItem>
             <NavigationItem target="/orders">My Orders</NavigationItem>
-            {props.isAuthenticated 
+            {!props.isAuthenticated 
                 ? <NavigationItem target="/auth">Login/Register</NavigationItem>
-                : <NavigationItem target="/logout">Login/Register</NavigationItem>}
+                : <NavigationItem target="/logout">Logout</NavigationItem>}
         </ul>
     )
 }
