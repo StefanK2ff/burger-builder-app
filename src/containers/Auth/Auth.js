@@ -6,6 +6,7 @@ import classes from "./Auth.module.css";
 
 import * as actions from "./../../store/actions/index";
 import { connect } from "react-redux";
+import { Redirect } from "react-router-dom";
 
 class Auth extends Component {
   state = {
@@ -125,14 +126,25 @@ class Auth extends Component {
 
     if (this.props.loading) {
       form = <Spinner />;
-    } 
+    }
 
     if (this.props.error) {
-        errorMsg = <p><br />{this.props.error.message}</p>
+      errorMsg = (
+        <p>
+          <br />
+          {this.props.error.message}
+        </p>
+      );
+    }
+
+    let authRedir = null;
+    if (this.props.isAuthenticated) {
+      authRedir = <Redirect to="/" />;
     }
 
     return (
       <div className={classes.Auth}>
+        {authRedir}
         {headline}
         {errorMsg}
         <form onSubmit={this.submitHandler}>
@@ -150,7 +162,8 @@ class Auth extends Component {
 const mapStateToProps = (state) => {
   return {
     loading: state.auth.loading,
-    error: state.auth.error
+    error: state.auth.error,
+    isAuthenticated: state.auth.token !== null,
   };
 };
 
