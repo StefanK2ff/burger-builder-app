@@ -94,6 +94,12 @@ class Auth extends Component {
     );
   };
 
+  componentDidMount() {
+    if (!this.props.buildingBurger && this.props.authRedirPath !== "/") {
+      this.props.onSetAuthRedirPath();
+    }
+  }
+
   render() {
     const formElementsArray = [];
     for (let key in this.state.controls) {
@@ -139,7 +145,7 @@ class Auth extends Component {
 
     let authRedir = null;
     if (this.props.isAuthenticated) {
-      authRedir = <Redirect to="/" />;
+      authRedir = <Redirect to={this.props.authRedirPath} />;
     }
 
     return (
@@ -164,6 +170,8 @@ const mapStateToProps = (state) => {
     loading: state.auth.loading,
     error: state.auth.error,
     isAuthenticated: state.auth.token !== null,
+    buildingBurger: state.burgerBuilder.building,
+    authRedirPath: state.auth.authRedirPath,
   };
 };
 
@@ -171,6 +179,7 @@ const mapDispatchToProps = (dispatch) => {
   return {
     onAuth: (email, pw, isSignup) =>
       dispatch(actions.auth(email, pw, isSignup)),
+    onSetAuthRedirPath: () => dispatch(actions.authRedir("/")),
   };
 };
 
