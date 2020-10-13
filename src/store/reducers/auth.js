@@ -6,6 +6,7 @@ const initialState = {
   userId: null,
   error: null,
   loading: false,
+  authRedirPath: "/",
 };
 
 const authStart = (state, action) => {
@@ -22,18 +23,24 @@ const authSuccess = (state, action) => {
 };
 
 const authFail = (state, action) => {
-    return updateObj(state, {
-        error: action.error,
-        loading: false,
-    })
-}
+  return updateObj(state, {
+    error: action.error,
+    loading: false,
+  });
+};
 
 const authLogout = (state, action) => {
-    return updateObj (state, {
-        token: null,
-        userId: null
-    })
-}
+  return updateObj(state, {
+    token: null,
+    userId: null,
+  });
+};
+
+const authRedir = (state, action) => {
+  return updateObj(state, {
+    authRedirPath: action.targetUrl,
+  });
+};
 
 const reducer = (state = initialState, action) => {
   switch (action.type) {
@@ -42,12 +49,14 @@ const reducer = (state = initialState, action) => {
     case actionTypes.AUTH_SUCCESS:
       return authSuccess(state, action);
     case actionTypes.AUTH_FAIL:
-        return authFail(state, action);
+      return authFail(state, action);
     case actionTypes.AUTH_LOGOUT:
-        return authLogout(state, action);
+      return authLogout(state, action);
+    case actionTypes.AUTH_REDIR:
+      return authRedir(state, action);
     default:
       return state;
   }
 };
 
-export default reducer
+export default reducer;

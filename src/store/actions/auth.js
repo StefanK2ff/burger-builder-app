@@ -28,6 +28,13 @@ export const logout = () => {
     }
 }
 
+export const authRedir = (targetUrl) => {
+  return {
+    type: actionTypes.AUTH_REDIR,
+    targetUrl
+  }
+}
+
 export const checkAuthTimeout = (expirationTime) => {
     return dispatch => {
         setTimeout(()=> {
