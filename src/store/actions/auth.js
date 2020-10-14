@@ -16,6 +16,8 @@ export const authSuccess = (token, userId) => {
 };
 
 export const authFail = (error) => {
+  localStorage.removeItem("token");
+  localStorage.removeItem("expirationDate");
   return {
     type: actionTypes.AUTH_FAIL,
     error,
@@ -63,6 +65,8 @@ export const auth = (email, password, isSignup) => {
       .post(signupURL + API_KEY, authData)
       .then((resp) => {
         console.log(resp);
+        localStorage.setItem("token", resp.data.idToken);
+        localStorage.setItem("expirationDate", new Date (new Date().getTime() + resp.data.expiresIn *1000));
         dispatch(authSuccess(resp.data.idToken, resp.data.localId));
         dispatch(checkAuthTimeout(resp.data.expiresIn))
       })
