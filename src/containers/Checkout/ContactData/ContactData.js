@@ -26,7 +26,7 @@ class ContactData extends Component {
         valid: false,
         touched: false,
       },
-      stree: {
+      street: {
         elementType: "input",
         elementConfig: {
           type: "text",
@@ -109,6 +109,7 @@ class ContactData extends Component {
       ingredients: this.props.ings,
       price: this.props.prc, //normally: recalculate price on server
       orderData: formData,
+      userId: this.props.userId,
     };
 
     this.props.onOrderBurger(order, this.props.token);
@@ -195,7 +196,8 @@ const mapStateToProps = state => {
     ings: state.burgerBuilder.ingredients,
     prc: state.burgerBuilder.totalPrice,
     ldng: state.order.loading,
-    token: state.auth.token
+    token: state.auth.token,
+    userId: state.auth.userId,
   }
 }
 
