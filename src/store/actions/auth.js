@@ -52,7 +52,7 @@ export const checkAuthTimeout = (expirationTime) => {
 
 export const auth = (email, password, isSignup) => {
   return (dispatch) => {
-    const API_KEY = "AIzaSyB3O7oV3Rg6a8cpmc0AElVZITZ8-fnmk8g";
+    const API_KEY = process.env.REACT_APP_API_KEY;
 
     dispatch(authStart());
     const authData = {
