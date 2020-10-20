@@ -5,6 +5,7 @@ import axios from "../../../axios-orders";
 import Spinner from "../../../components/UI/Spinner/Spinner";
 import Input from "../../../components/UI/Input/Input";
 import withErrorHandler from  "../../../hoc/withErrorHandler";
+import { checkValidity } from "../../../shared/validate";
 
 import { connect } from "react-redux";
 import * as orderActions from "../../../store/actions"
@@ -116,23 +117,6 @@ class ContactData extends Component {
     
   };
 
-  checkValiditiy = (value, rules) => {
-    let isValid = true
-    if (rules.required) {
-        isValid = value.trim() !== "" && isValid
-    }
-    if (rules.minLength) {
-        isValid = value.length >= rules.minLength && isValid
-    }
-    if (rules.maxLength) {
-        isValid = value.length <= rules.maxLength && isValid
-    }
-    if (rules.contains) {
-        isValid = value.indexOf(rules.contains) !== -1 && isValid
-    }
-    return isValid
-  };
-
   inputChangedHandler = (e, inputIdent) => {
     const updatedForm = {
       ...this.state.orderForm, //copies the pointer
@@ -141,7 +125,7 @@ class ContactData extends Component {
       ...updatedForm[inputIdent],
     };
     updatedFormElement.value = e.target.value;
-    updatedFormElement.valid = this.checkValiditiy(
+    updatedFormElement.valid = checkValidity(
       updatedFormElement.value,
       updatedFormElement.validation
     );

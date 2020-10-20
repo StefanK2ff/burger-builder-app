@@ -3,6 +3,7 @@ import Input from "../../components/UI/Input/Input";
 import Button from "../../components/UI/Button/Button";
 import Spinner from "../../components/UI/Spinner/Spinner";
 import classes from "./Auth.module.css";
+import { checkValidity } from "../../shared/validate";
 
 import * as actions from "./../../store/actions/index";
 import { connect } from "react-redux";
@@ -45,26 +46,6 @@ class Auth extends Component {
     isSignUp: true,
   };
 
-  checkValiditiy = (value, rules) => {
-    let isValid = true;
-    if (rules.required) {
-      isValid = value.trim() !== "" && isValid;
-    }
-    if (rules.minLength) {
-      isValid = value.length >= rules.minLength && isValid;
-    }
-    if (rules.maxLength) {
-      isValid = value.length <= rules.maxLength && isValid;
-    }
-    if (rules.contains) {
-      isValid = value.indexOf(rules.contains) !== -1 && isValid;
-    }
-    if (rules.isEmail) {
-      isValid = value.indexOf("@") !== -1 && isValid;
-    }
-    return isValid;
-  };
-
   switchAuthModeHandler = () => {
     this.setState({ isSignUp: !this.state.isSignUp });
   };
@@ -75,7 +56,7 @@ class Auth extends Component {
       [ident]: {
         ...this.state.controls[ident],
         value: e.target.value,
-        valid: this.checkValiditiy(
+        valid: checkValidity(
           e.target.value,
           this.state.controls[ident].validation
         ),

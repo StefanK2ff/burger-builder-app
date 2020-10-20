@@ -14,7 +14,7 @@ export default function sideDrawer(props) {
   return (
     <Aux>
       <Backdrop show={props.currentlyVisible} clicked={props.toggleVisibility}/>
-      <div className={attachedClasses.join(" ")}>
+      <div className={attachedClasses.join(" ")} onClick={props.toggleVisibility}>
         {/* <div onClick={props.toggleVisibility}>
             Close Menu
         </div> */}
