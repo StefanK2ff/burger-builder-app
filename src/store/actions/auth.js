@@ -68,7 +68,6 @@ export const auth = (email, password, isSignup) => {
     axios
       .post(signupURL + API_KEY, authData)
       .then((resp) => {
-        console.log(resp);
         localStorage.setItem("token", resp.data.idToken);
         localStorage.setItem("userId", resp.data.localId);
         localStorage.setItem("expirationDate", new Date (new Date().getTime() + resp.data.expiresIn *1000));

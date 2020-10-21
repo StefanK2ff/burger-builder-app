@@ -3,9 +3,6 @@ import Aux from "../../../hoc/Aux";
 import Button from "./../../UI/Button/Button";
 
 export default class Summary extends Component {
-//   componentDidUpdate() {
-//       console.log("[Summary] componentDidUpdate")
-//   }
 
   render() {
     const ingSummary = Object.keys(this.props.ingredients).map((key) => {
