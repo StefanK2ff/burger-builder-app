@@ -1,17 +1,17 @@
 import React, { Component } from "react";
-import Aux from "../hoc/Aux";
-import BurgerPreview from "../components/Burger/BurgerPreview";
-import BuildControls from "../components/Burger/BuildControls/BuildControls";
-import Modal from "../components/UI/Modal/Modal";
-import Summary from "../components/Burger/Summary/Summary";
-import Spinner from "../components/UI/Spinner/Spinner";
-import withErrorHandler from "../hoc/withErrorHandler";
-import axios from "../axios-orders";
+import Aux from "./../../hoc/Aux";
+import BurgerPreview from "../../components/Burger/BurgerPreview";
+import BuildControls from "../../components/Burger/BuildControls/BuildControls";
+import Modal from "./../../components/UI/Modal/Modal";
+import Summary from "./../../components/Burger/Summary/Summary";
+import Spinner from "./../../components/UI/Spinner/Spinner";
+import withErrorHandler from "./../../hoc/withErrorHandler";
+import axios from "./../../axios-orders";
 
 import { connect } from "react-redux";
-import * as actions from "../store/actions";
+import * as actions from "../../store/actions";
 
-class BurgerBuilder extends Component {
+export class BurgerBuilder extends Component {
   state = {
     //UI states for this component
     purchasing: false,
