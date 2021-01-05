@@ -26,7 +26,7 @@ const App = (props) => {
   let routes = (
     //default routes
     <Switch>
-      <Route path="/auth" render={() => <Auth />} />
+      <Route path="/auth" render={(props) => <Auth {...props} />} />
       <Route path="/" component={BurgerBuilder} />
       <Redirect to="/" />
     </Switch>
@@ -36,10 +36,10 @@ const App = (props) => {
     routes = (
       //routes if logged in
       <Switch>
-        <Route path="/checkout" render={ () => <Checkout />} />
-        <Route path="/orders" component={() => <Orders />} />
+        <Route path="/checkout" render={(props) => <Checkout {...props} />} />
+        <Route path="/orders" component={(props) => <Orders {...props} />} />
         <Route path="/logout" component={Logout} />
-        <Route path="/auth" component={ () => <Auth />} />
+        <Route path="/auth" component={(props) => <Auth {...props} />} />
         <Route path="/" component={BurgerBuilder} />
         <Redirect to="/" />
       </Switch>
@@ -47,7 +47,9 @@ const App = (props) => {
   }
   return (
     <div>
-      <Layout><Suspense fallback={<p>Loading ....</p>}>{routes}</Suspense></Layout>
+      <Layout>
+        <Suspense fallback={<p>Loading ....</p>}>{routes}</Suspense>
+      </Layout>
     </div>
   );
 };
