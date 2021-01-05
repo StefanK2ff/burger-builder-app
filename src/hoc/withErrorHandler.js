@@ -1,8 +1,13 @@
 import React, {useEffect, useState} from 'react';
+
 import Modal from "../components/UI/Modal/Modal";
+
 const withErrorHandler = (WrappedComponent, axios) => {
+  
   const WithErrorHandler = props => {
+    
     const [error, setError] = useState(null);
+    
     const requestInterceptor = axios.interceptors.request.use(
       req => {
         setError(null);
@@ -17,6 +22,7 @@ const withErrorHandler = (WrappedComponent, axios) => {
         return Promise.reject(errorParameter);
       }
     );
+    
     const responseInterceptor = axios.interceptors.response.use(
       res => res,
       errorParameter => {
@@ -28,8 +34,8 @@ const withErrorHandler = (WrappedComponent, axios) => {
         return Promise.reject('Request failed. Status code 404');
       }
     );
-    useEffect(
-      () => {
+    
+    useEffect(() => {
         return () => {
           axios.interceptors.request.eject(requestInterceptor);
           axios.interceptors.response.eject(responseInterceptor);
@@ -37,6 +43,7 @@ const withErrorHandler = (WrappedComponent, axios) => {
       },
       [requestInterceptor, responseInterceptor]
     );
+    
     return <>
       <Modal 
         show={error !== null}
@@ -47,7 +54,9 @@ const withErrorHandler = (WrappedComponent, axios) => {
       <WrappedComponent {...props}/>
     </>
   };
+
   return WithErrorHandler;
 };
+
 export default withErrorHandler;
 
