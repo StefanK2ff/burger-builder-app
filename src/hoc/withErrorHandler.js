@@ -1,48 +1,12 @@
-import React, {useEffect, useState} from 'react';
+import React from 'react';
+import useHttpErrorHandler from "../hooks/http-error-handler";
 
 import Modal from "../components/UI/Modal/Modal";
 
 const withErrorHandler = (WrappedComponent, axios) => {
   
   const WithErrorHandler = props => {
-    
-    const [error, setError] = useState(null);
-    
-    const requestInterceptor = axios.interceptors.request.use(
-      req => {
-        setError(null);
-        return req;
-      },
-      errorParameter => {
-        console.log(
-          'Error handler > request > error',
-          errorParameter
-        );
-        setError(errorParameter);
-        return Promise.reject(errorParameter);
-      }
-    );
-    
-    const responseInterceptor = axios.interceptors.response.use(
-      res => res,
-      errorParameter => {
-        console.log(
-          'Error handler > response > error',
-          errorParameter
-        );
-        setError(errorParameter);
-        return Promise.reject('Request failed. Status code 404');
-      }
-    );
-    
-    useEffect(() => {
-        return () => {
-          axios.interceptors.request.eject(requestInterceptor);
-          axios.interceptors.response.eject(responseInterceptor);
-        };
-      },
-      [requestInterceptor, responseInterceptor]
-    );
+    const [error, setError] = useHttpErrorHandler(axios);
     
     return <>
       <Modal 
