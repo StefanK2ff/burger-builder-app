@@ -76,12 +76,14 @@ const Auth = (props) => {
       isSignUp
     );
   };
+  
+  const { onSetAuthRedirPath, buildingBurger, authRedirPath} = props;
 
   useEffect( () => {
-    if (!props.buildingBurger && props.authRedirPath !== "/") {
-      props.onSetAuthRedirPath();
+    if (!buildingBurger && authRedirPath !== "/") {
+      onSetAuthRedirPath();
     }
-  },[]);
+  },[onSetAuthRedirPath, buildingBurger, authRedirPath]);
 
     const formElementsArray = [];
     for (let key in controls) {
